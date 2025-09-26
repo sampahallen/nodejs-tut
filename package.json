@@ -1,0 +1,27 @@
+{
+
+  "scripts": {
+
+    "start": "nodemon index.js"
+
+  },
+
+  "prettier": {
+  "semi": true,
+  "singleQuote": true,
+  "tabWidth": 2,
+  "trailingComma": "es5"
+},
+
+  "dependencies": {
+
+    "eslint": "^9.36.0",
+
+    "express": "^5.1.0",
+
+    "nodemon": "^3.1.10"
+
+  }
+
+}
+

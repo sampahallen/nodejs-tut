@@ -1,0 +1,98 @@
+@baseUrl = http://localhost:8000/api
+
+### 🏠 Welcome/Health Check
+GET {{baseUrl}}/hello
+
+### 📝 CREATE - Add New User 1
+POST {{baseUrl}}/users
+Content-Type: application/json
+
+{
+  "name": "John Doe",
+  "email": "john@example.com",
+  "age": 25,
+  "city": "New York"
+}
+
+### 📝 CREATE - Add New User 2
+POST {{baseUrl}}/users
+Content-Type: application/json
+
+{
+  "name": "Jane Smith",
+  "email": "jane@example.com",
+  "age": 30,
+  "city": "Los Angeles"
+}
+
+### 📝 CREATE - Add New User 3
+POST {{baseUrl}}/users
+Content-Type: application/json
+
+{
+  "name": "Mike Johnson",
+  "email": "mike@example.com",
+  "age": 28,
+  "city": "Chicago"
+}
+
+### 👥 READ - Get All Users (including active only)
+GET {{baseUrl}}/users
+
+### 🔍 READ - Get User by ID (replace :id with actual user ID)
+GET {{baseUrl}}/users/1
+
+### ✏ UPDATE - Update User by ID (replace :id with actual user ID)
+PUT {{baseUrl}}/users/1
+Content-Type: application/json
+
+{
+  "name": "John Updated",
+  "age": 26,
+  "city": "Boston"
+}
+
+### ✏ UPDATE - Partial Update User Email
+PUT {{baseUrl}}/users/2
+Content-Type: application/json
+
+{
+  "email": "jane.updated@example.com"
+}
+
+### 🗑 DELETE - Soft Delete User by ID (replace :id with actual user ID)
+DELETE {{baseUrl}}/users/1
+
+### 👥 READ - Get All Users Again (should not show soft deleted users)
+GET {{baseUrl}}/users
+
+### 🔍 READ - Try to Get Soft Deleted User (should return 404)
+GET {{baseUrl}}/users/1
+
+### 🗑 DELETE - Soft Delete Another User
+DELETE {{baseUrl}}/users/2
+
+### 👥 READ - Final Users List
+GET {{baseUrl}}/users
+
+### ❌ UPDATE - Try to Update Soft Deleted User (should fail)
+PUT {{baseUrl}}/users/1
+Content-Type: application/json
+
+{
+  "name": "This should fail"
+}
+
+### 📝 CREATE - Add User After Deletes
+POST {{baseUrl}}/users
+Content-Type: application/json
+
+{
+  "name": "Sarah Wilson",
+  "email": "sarah@example.com",
+  "age": 22,
+  "city": "Miami"
+}
+
+### 👥 READ - Final State of Users
+GET {{baseUrl}}/users
