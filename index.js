@@ -1,11 +1,20 @@
-const e = require('express');
 const express = require('express');
 const app = express();
 const port = 8000;
 
+const {Client, Result} = require('pg');
+const con = new Client({
+  host: "localhost",
+  user: "postgres",
+  port: 5432,
+  password: "Yhvngpluto2$",
+  database: "CRUD"
+})
+
+con.connect().then(() => console.log("connected"))
+
 app.use(express.json());
 
-let users = [];
 let nextId = 1;
 isDeleted = false;
 
@@ -17,8 +26,15 @@ app.post('/api/users', (req, res) => {
   const user = req.body;
   user.id = nextId++;
   user.isDeleted = isDeleted;
-  users.push(user);
-  res.send({ users: users, message: 'added' });
+  const insert_query = 'INSERT INTO Users (name, id, age, city, email, isDeleted) VALUES ($1, $2, $3, $4, $5, $6)'
+  con.query(insert_query, [user.name, user.id, user.age, user.city, user.email, user.isDeleted], (err, result) => {
+    if (err) {
+      res.status(500).send({error: "Server not Found"})
+    } else {
+      console.log(result)
+      res.status(201).send({message: "User created", user})
+    }
+  } )
 });
 
 app.get('/api/users', (req, res) => {
